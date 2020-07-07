@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group 'cc.eumc'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile fileTree(dir:'libs',include:['*.jar'])
+    compile group: 'javax.mail', name: 'mail', version: '1.4.5'
+}
+
+jar {
+    manifestContentCharset 'utf-8'
+    metadataCharset 'utf-8'
+    manifest {
+        attributes "Main-Class": "cc.eumc.eusmcapplication.Main"
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
